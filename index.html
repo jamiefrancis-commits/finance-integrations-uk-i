@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Finance Integrations: UK Regulatory Framework</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: Segoe UI, Tahoma, sans-serif; background: #0f1419; color: #fff; overflow: hidden; }
+  #slides { position: relative; width: 100vw; height: 100vh; }
+  .slide { display: none; position: absolute; width: 100%; height: 100%; top: 0; left: 0; padding: 80px; flex-direction: column; justify-content: center; background: linear-gradient(135deg, #0f1419 0%, #1a1f2e 100%); border: 1px solid rgba(255,255,255,0.1); }
+  .slide.active { display: flex; animation: slideIn 0.5s ease-out; }
+  @keyframes slideIn { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0); } }
+  h1 { font-size: 3.5em; margin-bottom: 30px; color: #00d4ff; text-shadow: 0 0 20px rgba(0, 212, 255, 0.5); }
+  h2 { font-size: 2.5em; margin-bottom: 20px; color: #00d4ff; }
+  p, li { font-size: 1.3em; line-height: 1.8; margin-bottom: 15px; color: #ccc; }
+  ul { margin-left: 40px; margin-top: 20px; }
+  li { margin-bottom: 12px; }
+  .highlight { color: #ffd700; font-weight: bold; }
+  .subtitle { color: #888; font-size: 1.2em; margin-top: 15px; }
+  button { padding: 12px 25px; margin: 10px; font-size: 1em; border: 1px solid rgba(255,255,255,0.3); background: rgba(0,212,255,0.1); color: #00d4ff; cursor: pointer; border-radius: 4px; transition: 0.3s; }
+  button:hover { background: rgba(0,212,255,0.2); }
+  button.active { background: rgba(0,212,255,0.4); }
+  .controls { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 100; }
+  .slide-counter { position: fixed; top: 30px; right: 30px; font-size: 1.1em; color: #888; }
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 20px; }
+  .compare-section { background: rgba(0,212,255,0.05); padding: 20px; border-left: 4px solid #00d4ff; border-radius: 4px; }
+  .compare-section h3 { color: #00d4ff; margin-bottom: 15px; font-size: 1.4em; }
+  .compare-row-item { background: rgba(255,255,255,0.05); padding: 12px; margin-bottom: 10px; border-radius: 3px; border-left: 2px solid #ffd700; }
+</style>
+</head>
+<body>
+<div id="slides">
+  <div class="slide" data-duration="7000">
+    <h1>Finance Integrations: UK Regulatory Framework</h1>
+    <p class="subtitle">Understanding Regulatory Requirements for Financial Data Integration</p>
+    <p style="font-size: 1.1em; color: #00d4ff; margin-top: 40px;">Press SPACE or use navigation buttons to advance</p>
+  </div>
+
+  <div class="slide" data-duration="6000">
+    <h2>Overview of UK Financial Regulation</h2>
+    <p>The UK maintains a comprehensive regulatory framework for financial services:</p>
+    <ul>
+      <li><span class="highlight">FCA (Financial Conduct Authority)</span> - Conducts regulation</li>
+      <li><span class="highlight">PRA (Prudential Regulation Authority)</span> - Prudential oversight</li>
+      <li><span class="highlight">Bank of England</span> - Monetary policy and financial stability</li>
+      <li><span class="highlight">Treasury</span> - Government financial policy</li>
+    </ul>
+  </div>
+
+  <div class="slide" data-duration="6000">
+    <h2>Key Regulatory Frameworks</h2>
+    <ul>
+      <li><span class="highlight">GDPR</span> - Data protection and privacy requirements</li>
+      <li><span class="highlight">PSD2</span> - Payment Services Directive 2 (Open Banking)</li>
+      <li><span class="highlight">MiFID II</span> - Markets in Financial Instruments Directive</li>
+      <li><span class="highlight">RMKTD</span> - Reporting Markets Technical Directive</li>
+      <li><span class="highlight">FCA Handbook</span> - Comprehensive rulebook</li>
+    </ul>
+  </div>
+
+  <div class="slide" data-duration="8000">
+    <h2>Open Banking & PSD2</h2>
+    <p><span class="highlight">PSD2</span> enables third-party providers to access customer financial data:</p>
+    <div class="compare-grid">
+      <div class="compare-section">
+        <h3>Benefits</h3>
+        <div class="compare-row-item">Enhanced Competition</div>
+        <div class="compare-row-item">Better Customer Service</div>
+        <div class="compare-row-item">Innovation in FinTech</div>
+        <div class="compare-row-item">Lower Costs</div>
+      </div>
+      <div class="compare-section">
+        <h3>Requirements</h3>
+        <div class="compare-row-item">Strong Customer Authentication (SCA)</div>
+        <div class="compare-row-item">Secure Data Sharing</div>
+        <div class="compare-row-item">Compliance Monitoring</div>
+        <div class="compare-row-item">Incident Reporting</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide" data-duration="7000">
+    <h2>GDPR Compliance in Finance</h2>
+    <p>Personal data protection is paramount:</p>
+    <ul>
+      <li><span class="highlight">Consent Requirements</span> - Explicit user consent for data processing</li>
+      <li><span class="highlight">Data Subject Rights</span> - Access, rectification, erasure rights</li>
+      <li><span class="highlight">Privacy by Design</span> - Integrate data protection from the start</li>
+      <li><span class="highlight">DPA 2018</span> - UK's implementation of GDPR</li>
+      <li><span class="highlight">Data Processing Agreements</span> - Contracts with third parties</li>
+    </ul>
+  </div>
+
+  <div class="slide" data-duration="8000">
+    <h2>MiFID II Requirements</h2>
+    <p>Markets in Financial Instruments Directive II governs investment services:</p>
+    <div class="compare-grid">
+      <div class="compare-section">
+        <h3>Client Classification</h3>
+        <div class="compare-row-item">Retail Clients</div>
+        <div class="compare-row-item">Professional Clients</div>
+        <div class="compare-row-item">Eligible Counterparties</div>
+      </div>
+      <div class="compare-section">
+        <h3>Obligations</h3>
+        <div class="compare-row-item">Suitability Assessment</div>
+        <div class="compare-row-item">Conflict of Interest Disclosures</div>
+        <div class="compare-row-item">Best Execution</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide" data-duration="6000">
+    <h2>Strong Customer Authentication (SCA)</h2>
+    <p>Required under PSD2 for electronic payments and sensitive account access:</p>
+    <ul>
+      <li><span class="highlight">Two-Factor Authentication</span> - SMS, App, Card, Biometric</li>
+      <li><span class="highlight">Exemptions</span> - Low value payments, recurring transactions (regulated)</li>
+      <li><span class="highlight">Implementation Deadline</span> - 31 December 2020 (extended for certain scenarios)</li>
+      <li><span class="highlight">Risk-Based Approaches</span> - Reduced friction for low-risk transactions</li>
+    </ul>
+  </div>
+
+  <div class="slide" data-duration="7000">
+    <h2>Financial Data Integration Best Practices</h2>
+    <ul>
+      <li><span class="highlight">API-First Architecture</span> - Use secure, standardized APIs (OAuth 2.0)</li>
+      <li><span class="highlight">Encryption</span> - TLS 1.2+ for transit, AES-256 for storage</li>
+      <li><span class="highlight">Access Controls</span> - Role-based, least privilege principles</li>
+      <li><span class="highlight">Audit Logging</span> - Complete record of all data access</li>
+      <li><span class="highlight">Regular Testing</span> - Penetration testing and security audits</li>
+    </ul>
+  </div>
+
+  <div class="slide" data-duration="6000">
+    <h2>Compliance Monitoring & Reporting</h2>
+    <p>Continuous oversight requirements:</p>
+    <ul>
+      <li><span class="highlight">Transaction Monitoring</span> - AML/CFT compliance</li>
+      <li><span class="highlight">Regulatory Reporting</span> - EMIR, REMIT, TRACE equivalents</li>
+      <li><span class="highlight">Incident Reporting</span> - Security breaches within 72 hours to ICO</li>
+      <li><span class="highlight">Regular Audits</span> - Internal and external assessments</li>
+    </ul>
+  </div>
+
+  <div class="slide" data-duration="5000">
+    <h1 style="color: #00d4ff;">Key Takeaways</h1>
+    <ul>
+      <li>UK regulation prioritizes consumer protection and market stability</li>
+      <li>PSD2 and Open Banking drive innovation in financial services</li>
+      <li>GDPR compliance is non-negotiable for data handling</li>
+      <li>Strong authentication and encryption are fundamental</li>
+      <li>Continuous monitoring and reporting demonstrate compliance</li>
+    </ul>
+  </div>
+
+  <div class="slide" data-duration="0">
+    <h1>Questions & Discussion</h1>
+    <p class="subtitle">For more information, visit the FCA and PRA websites</p>
+    <p style="margin-top: 50px; color: #888;">Slide presentation created for financial integration training</p>
+  </div>
+</div>
+
+<div class="slide-counter"><span id="current">1</span> / <span id="total">11</span></div>
+
+<div class="controls">
+  <button id="prev-btn">← Previous</button>
+  <button id="play-btn">▶</button>
+  <button id="next-btn">Next →</button>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  let current = 0;
+  let playing = false;
+  let timer;
+  const playBtn = document.getElementById('play-btn');
+  document.getElementById('total').textContent = slides.length;
+
+  function updateCounter() { document.getElementById('current').textContent = current + 1; }
+
+  function goNext() { if (current < slides.length - 1) { showSlide(current + 1); } }
+  function goPrev() { if (current > 0) { showSlide(current - 1); } }
+
+  function showSlide(n) {
+    slides.forEach(s => s.classList.remove('active'));
+    current = n;
+    slides[current].classList.add('active');
+    updateCounter();
+    if (playing) scheduleNext();
+  }
+
+  function scheduleNext() {
+    clearTimeout(timer);
+    if (!playing) return;
+    var d = parseInt(slides[current].dataset.duration) || 5000;
+    timer = setTimeout(autoNext, d);
+  }
+
+  function stopPlay() {
+    playing = false; clearTimeout(timer);
+    playBtn.textContent = '▶'; playBtn.classList.remove('active');
+  }
+
+  function startPlay() {
+    playing = true;
+    playBtn.textContent = '⏸'; playBtn.classList.add('active');
+    scheduleNext();
+  }
+
+  function togglePlay() { playing ? stopPlay() : startPlay(); }
+
+  document.getElementById('next-btn').addEventListener('click', function() { stopPlay(); goNext(); });
+  document.getElementById('prev-btn').addEventListener('click', function() { stopPlay(); goPrev(); });
+  playBtn.addEventListener('click', togglePlay);
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); stopPlay(); goNext(); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); stopPlay(); goPrev(); }
+    if (e.key === 'p') togglePlay();
+  });
+
+  showSlide(0);
+  </script>
+</body>
+</html>
