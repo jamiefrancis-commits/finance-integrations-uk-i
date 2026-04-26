@@ -3,225 +3,929 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Finance Integrations: UK Regulatory Framework</title>
+<title>Finance Integrations (UK/I) — Qargo Academy</title>
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800;900&display=swap');
+
+  :root {
+    --green: #00E85B;
+    --green-secondary: #24D269;
+    --navy: #1C2C31;
+    --navy-90: #304045;
+    --navy-70: #606B6F;
+    --navy-10: #D4E1E5;
+    --mint: #EBFFF5;
+    --offwhite: #FEFEFE;
+    --light-grey: #EBF2EF;
+    --light-green: #F4FBF7;
+    --dark-grey: #BBC0C1;
+    --white: #ffffff;
+    --amber: #FCB220;
+    --red: #FF5E7A;
+    --blue: #4A9EFF;
+    --iso-green-1: #64F87D;
+    --iso-green-2: #36BB6B;
+  }
+
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: Segoe UI, Tahoma, sans-serif; background: #0f1419; color: #fff; overflow: hidden; }
-  #slides { position: relative; width: 100vw; height: 100vh; }
-  .slide { display: none; position: absolute; width: 100%; height: 100%; top: 0; left: 0; padding: 80px; flex-direction: column; justify-content: center; background: linear-gradient(135deg, #0f1419 0%, #1a1f2e 100%); border: 1px solid rgba(255,255,255,0.1); }
-  .slide.active { display: flex; animation: slideIn 0.5s ease-out; }
-  @keyframes slideIn { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0); } }
-  h1 { font-size: 3.5em; margin-bottom: 30px; color: #00d4ff; text-shadow: 0 0 20px rgba(0, 212, 255, 0.5); }
-  h2 { font-size: 2.5em; margin-bottom: 20px; color: #00d4ff; }
-  p, li { font-size: 1.3em; line-height: 1.8; margin-bottom: 15px; color: #ccc; }
-  ul { margin-left: 40px; margin-top: 20px; }
-  li { margin-bottom: 12px; }
-  .highlight { color: #ffd700; font-weight: bold; }
-  .subtitle { color: #888; font-size: 1.2em; margin-top: 15px; }
-  button { padding: 12px 25px; margin: 10px; font-size: 1em; border: 1px solid rgba(255,255,255,0.3); background: rgba(0,212,255,0.1); color: #00d4ff; cursor: pointer; border-radius: 4px; transition: 0.3s; }
-  button:hover { background: rgba(0,212,255,0.2); }
-  button.active { background: rgba(0,212,255,0.4); }
-  .controls { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 100; }
-  .slide-counter { position: fixed; top: 30px; right: 30px; font-size: 1.1em; color: #888; }
-  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 20px; }
-  .compare-section { background: rgba(0,212,255,0.05); padding: 20px; border-left: 4px solid #00d4ff; border-radius: 4px; }
-  .compare-section h3 { color: #00d4ff; margin-bottom: 15px; font-size: 1.4em; }
-  .compare-row-item { background: rgba(255,255,255,0.05); padding: 12px; margin-bottom: 10px; border-radius: 3px; border-left: 2px solid #ffd700; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  #progress-bar {
+    position: fixed; top: 0; left: 0; height: 4px;
+    background: linear-gradient(90deg, var(--green), var(--iso-green-1));
+    z-index: 1000; transition: width 0.6s ease;
+    box-shadow: 0 0 12px rgba(0,232,91,0.4);
+  }
+
+  #controls {
+    position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+    display: flex; align-items: center; gap: 16px; z-index: 999;
+    background: rgba(28,44,49,0.9); backdrop-filter: blur(12px);
+    padding: 10px 24px; border-radius: 40px;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  #controls button {
+    background: none; border: none; color: var(--navy-70); cursor: pointer;
+    font-size: 18px; padding: 6px 10px; border-radius: 8px;
+    transition: all 0.2s;
+  }
+  #controls button:hover { color: var(--white); background: rgba(255,255,255,0.08); }
+  #controls button.active { color: var(--green); }
+  #slide-counter {
+    color: var(--dark-grey); font-size: 13px; font-weight: 500;
+    min-width: 60px; text-align: center;
+  }
+
+  #slideshow { width: 100vw; height: 100vh; position: relative; overflow: hidden; }
+  .slide {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transform: scale(0.97);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    pointer-events: none; padding: 60px;
+  }
+  .slide.active { opacity: 1; transform: scale(1); pointer-events: auto; }
+  .slide-inner { max-width: 960px; width: 100%; text-align: center; }
+
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .slide.active .reveal { opacity: 1; transform: translateY(0); }
+  .slide.active .reveal.d1 { transition-delay: 0.3s; }
+  .slide.active .reveal.d2 { transition-delay: 0.6s; }
+  .slide.active .reveal.d3 { transition-delay: 0.9s; }
+  .slide.active .reveal.d4 { transition-delay: 1.2s; }
+  .slide.active .reveal.d5 { transition-delay: 1.5s; }
+
+  .bg-glow {
+    position: fixed; border-radius: 50%; filter: blur(120px);
+    pointer-events: none; z-index: -1;
+  }
+  .bg-glow.g1 { width: 600px; height: 600px; background: rgba(0,232,91,0.05); top: -200px; right: -200px; }
+  .bg-glow.g2 { width: 500px; height: 500px; background: rgba(0,232,91,0.03); bottom: -150px; left: -150px; }
+  .bg-chevron {
+    position: fixed; bottom: -80px; right: -80px;
+    width: 400px; height: 400px;
+    opacity: 0.03; z-index: -1; pointer-events: none;
+  }
+
+  #qargo-logo {
+    position: fixed; top: 24px; left: 32px; z-index: 998;
+    opacity: 0.85; transition: opacity 0.3s;
+  }
+  #qargo-logo:hover { opacity: 1; }
+  #qargo-logo svg { width: 120px; height: auto; }
+
+  .hero-title { font-size: 64px; font-weight: 700; line-height: 1.1; margin-bottom: 20px; }
+  .hero-title .accent { color: var(--green); }
+  .section-label { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; color: var(--green); margin-bottom: 16px; }
+  .section-title { font-size: 48px; font-weight: 700; line-height: 1.15; margin-bottom: 20px; }
+  .section-subtitle { font-size: 22px; font-weight: 400; color: var(--dark-grey); max-width: 700px; margin: 0 auto; line-height: 1.6; }
+  .body-text { font-size: 20px; color: var(--dark-grey); max-width: 720px; margin: 0 auto; line-height: 1.7; }
+  .big-number { font-size: 80px; font-weight: 800; color: var(--green); line-height: 1; }
+  .big-label { font-size: 18px; color: var(--navy-70); margin-top: 8px; font-weight: 500; }
+
+  .highlight, .highlight-green { color: var(--green); font-weight: 600; }
+  .highlight-amber { color: var(--amber); font-weight: 600; }
+  .highlight-red { color: var(--red); font-weight: 600; }
+  .highlight-blue { color: var(--blue); font-weight: 600; }
+
+  .stats-row { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; margin-top: 32px; }
+  .stat-card {
+    background: rgba(0,232,91,0.04); border: 1px solid rgba(0,232,91,0.12);
+    border-radius: 16px; padding: 32px 28px; min-width: 180px; flex: 1; max-width: 280px;
+  }
+
+  .steps-grid { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 28px; }
+  .step-card {
+    background: rgba(0,232,91,0.04); border: 1px solid rgba(0,232,91,0.12);
+    border-radius: 14px; padding: 24px 18px; flex: 1; min-width: 120px; max-width: 160px; text-align: center;
+  }
+  .step-num { font-size: 28px; font-weight: 800; color: var(--green); margin-bottom: 8px; }
+  .step-label { font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+  .step-desc { font-size: 12px; color: var(--navy-70); line-height: 1.4; }
+
+  .compare-row { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; margin-top: 28px; }
+  .compare-card {
+    border-radius: 16px; padding: 28px 24px; flex: 1; max-width: 440px; text-align: left;
+  }
+  .compare-card.good {
+    background: rgba(0,232,91,0.04); border: 1px solid rgba(0,232,91,0.12);
+  }
+  .compare-card.bad {
+    background: rgba(255,94,122,0.04); border: 1px solid rgba(255,94,122,0.12);
+  }
+  .compare-title { font-size: 20px; font-weight: 700; margin-bottom: 16px; }
+  .compare-row-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .compare-label { font-size: 15px; color: var(--navy-10); }
+  .compare-value { font-size: 15px; font-weight: 600; }
+
+  .network-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 28px; }
+  .network-card {
+    background: rgba(0,232,91,0.04); border: 1px solid rgba(0,232,91,0.10);
+    border-radius: 14px; padding: 22px 18px; text-align: left;
+  }
+  .network-name { font-size: 16px; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+  .network-detail { font-size: 13px; color: var(--navy-70); line-height: 1.5; }
+
+  .cap-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 28px; }
+  .cap-card {
+    background: rgba(0,232,91,0.05); border: 1px solid rgba(0,232,91,0.12);
+    border-radius: 14px; padding: 22px 14px; text-align: center;
+  }
+  .cap-name { font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+  .cap-desc { font-size: 12px; color: var(--navy-70); line-height: 1.4; }
+
+  .glossary-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 28px; }
+  .glossary-item {
+    background: rgba(0,232,91,0.03); border: 1px solid rgba(0,232,91,0.08);
+    border-radius: 12px; padding: 18px 16px; text-align: left;
+  }
+  .glossary-term { font-size: 15px; font-weight: 700; color: var(--green); margin-bottom: 4px; }
+  .glossary-def { font-size: 13px; color: var(--navy-10); line-height: 1.4; }
+
+  .route-line { display: flex; align-items: center; justify-content: center; gap: 0; margin-top: 32px; flex-wrap: wrap; }
+  .route-stop { text-align: center; min-width: 100px; }
+  .stop-name { font-size: 13px; font-weight: 700; color: var(--white); }
+  .stop-detail { font-size: 11px; color: var(--navy-70); margin-top: 4px; }
+  .route-connector { width: 40px; height: 2px; background: linear-gradient(90deg, var(--green), var(--iso-green-1)); margin: 0 4px; flex-shrink: 0; position: relative; top: -12px; }
+
+  .two-col {
+    display: flex; gap: 32px; justify-content: center;
+    margin-top: 32px; flex-wrap: wrap;
+    max-width: 900px; margin-left: auto; margin-right: auto;
+  }
+  .col-card {
+    flex: 1; min-width: 280px; max-width: 420px;
+    background: rgba(0,232,91,0.04);
+    border: 1px solid rgba(0,232,91,0.15);
+    border-radius: 16px; padding: 32px 28px;
+  }
+  .col-card-title { font-size: 18px; font-weight: 700; color: var(--green); margin-bottom: 8px; }
+  .col-card-body { font-size: 14px; color: var(--navy-10); line-height: 1.5; }
+
+  .qargo-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--green), var(--iso-green-2));
+    padding: 10px 28px;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--navy);
+  }
+  .callout-green {
+    background: rgba(0,232,91,0.08); border: 1px solid rgba(0,232,91,0.2);
+    border-radius: 12px; padding: 20px 24px; margin-top: 24px; text-align: left;
+    font-size: 17px; color: var(--mint); line-height: 1.5;
+  }
+
+  .integration-table { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 24px; border-radius: 12px; overflow: hidden; }
+  .integration-table th {
+    background: rgba(0,232,91,0.1); color: var(--green); font-size: 13px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px; padding: 14px 16px; text-align: left;
+  }
+  .integration-table td {
+    padding: 12px 16px; font-size: 14px; color: var(--navy-10);
+    border-bottom: 1px solid rgba(255,255,255,0.05); text-align: left;
+  }
+  .integration-table tr:last-child td { border-bottom: none; }
+  .integration-table tbody tr { background: rgba(0,232,91,0.02); }
+  .integration-table tbody tr:nth-child(even) { background: rgba(0,232,91,0.04); }
+
+  .method-badge {
+    display: inline-block; padding: 3px 10px; border-radius: 20px;
+    font-size: 11px; font-weight: 600;
+  }
+  .method-badge.api { background: rgba(0,232,91,0.12); color: var(--green); }
+  .method-badge.csv { background: rgba(252,178,32,0.12); color: var(--amber); }
+  .method-badge.file { background: rgba(74,158,255,0.12); color: var(--blue); }
 </style>
 </head>
 <body>
-<div id="slides">
-  <div class="slide" data-duration="7000">
-    <h1>Finance Integrations: UK Regulatory Framework</h1>
-    <p class="subtitle">Understanding Regulatory Requirements for Financial Data Integration</p>
-    <p style="font-size: 1.1em; color: #00d4ff; margin-top: 40px;">Press SPACE or use navigation buttons to advance</p>
+  <div class="bg-glow g1"></div>
+  <div class="bg-glow g2"></div>
+  <div class="bg-chevron">
+    <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M40 180L100 100L40 20" stroke="#00E85B" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M100 180L160 100L100 20" stroke="#00E85B" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
   </div>
 
-  <div class="slide" data-duration="6000">
-    <h2>Overview of UK Financial Regulation</h2>
-    <p>The UK maintains a comprehensive regulatory framework for financial services:</p>
-    <ul>
-      <li><span class="highlight">FCA (Financial Conduct Authority)</span> - Conducts regulation</li>
-      <li><span class="highlight">PRA (Prudential Regulation Authority)</span> - Prudential oversight</li>
-      <li><span class="highlight">Bank of England</span> - Monetary policy and financial stability</li>
-      <li><span class="highlight">Treasury</span> - Government financial policy</li>
-    </ul>
+  <div id="qargo-logo">
+    <svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 497.56 175.56">
+      <defs><style>.cls-1{fill:#00e85b;}.cls-2{fill:#fefefe;}</style></defs>
+      <g id="Layer_1-2" data-name="Layer 1">
+        <path class="cls-2" d="M277.25,120.7l-4.8-14.04h-25.12l-4.99,14.04h-12.28l24.47-65.84h11.27l24.28,65.84h-12.83ZM259.98,69.73h-.18l-9.05,26.41h18.19l-8.96-26.41h0Z"/>
+        <path class="cls-2" d="M332.76,120.7l-15.42-24.65h-10.62v24.65h-12.28V54.86h26.04c3.02,0,5.76.34,8.22,1.02s4.77,1.88,6.93,3.6c2.28,1.79,4.05,4.08,5.31,6.88,1.26,2.8,1.89,5.86,1.89,9.19,0,1.97-.26,3.92-.79,5.86-.52,1.94-1.32,3.76-2.4,5.45-1.08,1.69-2.43,3.22-4.06,4.57-1.63,1.36-3.56,2.43-5.77,3.23l16.34,26.04h-13.39ZM330.82,75.45c0-1.91-.31-3.52-.92-4.85-.62-1.32-1.46-2.38-2.54-3.19-1.08-.8-2.34-1.37-3.79-1.71s-3.03-.51-4.76-.51h-12.1v20.5h12.28c3.57,0,6.43-.85,8.59-2.54,2.15-1.69,3.23-4.26,3.23-7.71h.01Z"/>
+        <path class="cls-2" d="M397.92,109.71c-1.39,2.71-3.23,4.96-5.54,6.74-2.31,1.79-4.94,3.13-7.89,4.02s-6,1.34-9.14,1.34c-3.57,0-6.97-.49-10.2-1.48-3.23-.98-6.08-2.45-8.54-4.39-2.46-1.94-4.42-4.31-5.86-7.11-1.45-2.8-2.17-6.05-2.17-9.74v-21.05c0-3.88.69-7.32,2.08-10.34,1.39-3.02,3.28-5.56,5.68-7.62,2.4-2.06,5.19-3.63,8.36-4.71,3.17-1.08,6.57-1.62,10.2-1.62,3.14,0,6.22.4,9.23,1.19s5.69,2.03,8.03,3.71,4.23,3.82,5.68,6.43c1.45,2.61,2.17,5.76,2.17,9.45v2.03h-11.63v-.92c0-2.15-.42-3.94-1.25-5.36s-1.91-2.55-3.23-3.42c-1.32-.86-2.79-1.46-4.39-1.8-1.6-.34-3.14-.51-4.62-.51-1.6,0-3.23.22-4.89.65s-3.17,1.16-4.52,2.18c-1.36,1.02-2.48,2.35-3.37,3.99-.89,1.64-1.34,3.63-1.34,5.98v21.14c0,1.98.4,3.76,1.2,5.33.8,1.58,1.86,2.89,3.19,3.94,1.32,1.05,2.86,1.85,4.62,2.41s3.62.83,5.59.83c1.48,0,3-.22,4.57-.65s2.97-1.13,4.2-2.09c1.23-.96,2.25-2.2,3.05-3.72.8-1.52,1.2-3.36,1.2-5.53v-1.58h-16.99v-11.08h28.62v13.76c0,3.69-.69,6.9-2.08,9.6h-.02Z"/>
+        <path class="cls-2" d="M460.18,97.52c0,3.88-.75,7.33-2.26,10.34-1.51,3.02-3.51,5.56-6,7.62s-5.31,3.63-8.45,4.71-6.34,1.62-9.6,1.62c-3.57,0-6.97-.49-10.2-1.48-3.23-.98-6.08-2.45-8.54-4.39-2.46-1.94-4.42-4.31-5.86-7.11-1.45-2.8-2.17-6.05-2.17-9.74v-21.05c0-3.88.75-7.32,2.26-10.34s3.51-5.56,6-7.62c2.49-2.06,5.31-3.63,8.45-4.71s6.34-1.62,9.6-1.62c3.57,0,6.97.57,10.2,1.71s6.08,2.74,8.54,4.8c2.46,2.06,4.42,4.57,5.86,7.53,1.45,2.95,2.17,6.28,2.17,9.97,0,0,0,19.76,0,19.76ZM447.99,77.07c0-1.98-.4-3.74-1.2-5.28-.8-1.54-1.86-2.86-3.19-3.94-1.32-1.08-2.88-1.9-4.66-2.46-1.79-.56-3.63-.84-5.54-.84-1.6,0-3.23.22-4.89.65s-3.17,1.16-4.52,2.18c-1.36,1.02-2.48,2.35-3.37,3.99-.89,1.64-1.34,3.63-1.34,5.98v21.14c0,1.98.4,3.76,1.2,5.33.8,1.58,1.86,2.89,3.19,3.94,1.32,1.05,2.86,1.85,4.62,2.41,1.75.56,3.62.83,5.59.83,1.54,0,3.15-.22,4.85-.65,1.69-.43,3.22-1.16,4.57-2.18,1.35-1.02,2.48-2.35,3.37-3.99.89-1.64,1.34-3.63,1.34-5.98v-21.14h-.02Z"/>
+        <path class="cls-2" d="M227.22,67.79c-1.45-2.95-3.4-5.46-5.86-7.53-2.46-2.06-5.31-3.66-8.54-4.8s-6.63-1.71-10.2-1.71c-3.26,0-6.46.54-9.6,1.62s-5.96,2.65-8.45,4.71c-2.49,2.06-4.49,4.6-6,7.62-1.51,3.02-2.26,6.46-2.26,10.34v21.05c0,3.69.72,6.94,2.17,9.74s3.4,5.17,5.86,7.11,5.31,3.4,8.54,4.39c3.23.98,6.63,1.48,10.2,1.48,1.9,0,3.78-.19,5.64-.55l15.17,9.1v-10.53l-4.75-2.85c.68-.47,1.35-.96,1.99-1.49,2.49-2.06,4.49-4.6,6-7.62,1.51-3.02,2.26-6.46,2.26-10.34v-19.76c0-3.69-.72-7.02-2.17-9.97h0ZM203.07,111c-1.97,0-3.83-.28-5.59-.83-1.75-.56-3.29-1.36-4.62-2.41-1.32-1.05-2.39-2.36-3.19-3.94s-1.2-3.35-1.2-5.33v-21.14c0-2.35.45-4.34,1.34-5.98.89-1.64,2.02-2.97,3.37-3.99,1.35-1.02,2.86-1.75,4.52-2.18s3.29-.65,4.89-.65c1.91,0,3.75.28,5.54.84,1.78.56,3.34,1.38,4.66,2.46s2.38,2.39,3.19,3.94c.8,1.54,1.2,3.31,1.2,5.28v21.14c0,2.35-.45,4.34-1.34,5.98s-2.02,2.97-3.37,3.99c-1.35,1.02-2.88,1.75-4.57,2.18s-3.31.65-4.85.65h.02Z"/>
+        <polygon class="cls-1" points="38 64.98 73.15 43.89 108.31 64.98 144.88 43.04 73.15 0 1.42 43.04 38 64.98"/>
+        <polygon class="cls-1" points="71.69 130.8 36.58 109.73 36.58 67.54 0 45.6 0 131.67 71.69 174.69 71.69 130.8"/>
+        <polygon class="cls-1" points="74.62 174.69 109.73 153.62 146.3 175.56 146.3 131.67 109.73 109.73 74.62 130.8 74.62 174.69"/>
+        <polygon class="cls-1" points="146.3 45.6 109.73 67.54 109.73 109.73 146.3 87.78 146.3 45.6"/>
+      </g>
+    </svg>
   </div>
 
-  <div class="slide" data-duration="6000">
-    <h2>Key Regulatory Frameworks</h2>
-    <ul>
-      <li><span class="highlight">GDPR</span> - Data protection and privacy requirements</li>
-      <li><span class="highlight">PSD2</span> - Payment Services Directive 2 (Open Banking)</li>
-      <li><span class="highlight">MiFID II</span> - Markets in Financial Instruments Directive</li>
-      <li><span class="highlight">RMKTD</span> - Reporting Markets Technical Directive</li>
-      <li><span class="highlight">FCA Handbook</span> - Comprehensive rulebook</li>
-    </ul>
-  </div>
+  <div id="progress-bar" style="width: 0%"></div>
 
-  <div class="slide" data-duration="8000">
-    <h2>Open Banking & PSD2</h2>
-    <p><span class="highlight">PSD2</span> enables third-party providers to access customer financial data:</p>
-    <div class="compare-grid">
-      <div class="compare-section">
-        <h3>Benefits</h3>
-        <div class="compare-row-item">Enhanced Competition</div>
-        <div class="compare-row-item">Better Customer Service</div>
-        <div class="compare-row-item">Innovation in FinTech</div>
-        <div class="compare-row-item">Lower Costs</div>
-      </div>
-      <div class="compare-section">
-        <h3>Requirements</h3>
-        <div class="compare-row-item">Strong Customer Authentication (SCA)</div>
-        <div class="compare-row-item">Secure Data Sharing</div>
-        <div class="compare-row-item">Compliance Monitoring</div>
-        <div class="compare-row-item">Incident Reporting</div>
-      </div>
-    </div>
-  </div>
+  <div id="slideshow">
 
-  <div class="slide" data-duration="7000">
-    <h2>GDPR Compliance in Finance</h2>
-    <p>Personal data protection is paramount:</p>
-    <ul>
-      <li><span class="highlight">Consent Requirements</span> - Explicit user consent for data processing</li>
-      <li><span class="highlight">Data Subject Rights</span> - Access, rectification, erasure rights</li>
-      <li><span class="highlight">Privacy by Design</span> - Integrate data protection from the start</li>
-      <li><span class="highlight">DPA 2018</span> - UK's implementation of GDPR</li>
-      <li><span class="highlight">Data Processing Agreements</span> - Contracts with third parties</li>
-    </ul>
-  </div>
-
-  <div class="slide" data-duration="8000">
-    <h2>MiFID II Requirements</h2>
-    <p>Markets in Financial Instruments Directive II governs investment services:</p>
-    <div class="compare-grid">
-      <div class="compare-section">
-        <h3>Client Classification</h3>
-        <div class="compare-row-item">Retail Clients</div>
-        <div class="compare-row-item">Professional Clients</div>
-        <div class="compare-row-item">Eligible Counterparties</div>
-      </div>
-      <div class="compare-section">
-        <h3>Obligations</h3>
-        <div class="compare-row-item">Suitability Assessment</div>
-        <div class="compare-row-item">Conflict of Interest Disclosures</div>
-        <div class="compare-row-item">Best Execution</div>
+    <!-- SLIDE 1: Title -->
+    <div class="slide active" data-duration="5000">
+      <div class="slide-inner">
+        <div class="reveal" style="margin-bottom: 20px;">
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="8" y="12" width="48" height="40" rx="4" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/>
+            <path d="M8 22H56" stroke="#00E85B" stroke-width="2"/>
+            <path d="M24 22V52" stroke="#00E85B" stroke-width="2"/>
+            <circle cx="16" cy="17" r="2" fill="#00E85B"/>
+            <circle cx="22" cy="17" r="2" fill="#00E85B"/>
+            <path d="M32 32H48" stroke="#00E85B" stroke-width="2" stroke-linecap="round"/>
+            <path d="M32 38H44" stroke="#00E85B" stroke-width="2" stroke-linecap="round"/>
+            <path d="M32 44H46" stroke="#00E85B" stroke-width="2" stroke-linecap="round"/>
+            <path d="M12 30L16 34L20 28" stroke="#00E85B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12 40L16 44L20 38" stroke="#00E85B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="hero-title reveal d1">Finance<br><span class="accent">Integrations</span></div>
+        <div class="section-subtitle reveal d2">UK &amp; Ireland deep dive for Sales &amp; Solutions Engineering</div>
+        <div class="reveal d3" style="margin-top: 36px;">
+          <span class="qargo-badge">Qargo Academy</span>
+        </div>
       </div>
     </div>
+
+    <!-- SLIDE 2: Why It Matters -->
+    <div class="slide" data-duration="7000">
+      <div class="slide-inner">
+        <div class="section-label reveal">The Big Picture</div>
+        <div class="section-title reveal d1">Why <span class="highlight">Finance Integrations</span> Close Deals</div>
+        <div class="body-text reveal d2">Logistics companies live and die by invoicing accuracy. Connecting Qargo directly to their accounting software eliminates double-entry, cuts errors, and accelerates the <span class="highlight">order-to-cash cycle</span>.</div>
+        <div class="cap-grid reveal d3" style="grid-template-columns: repeat(5, 1fr);">
+          <div class="cap-card">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" style="margin: 0 auto 10px; display: block;">
+              <path d="M4 14L12 22L24 6" stroke="#00E85B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+            <div class="cap-name">No Double Entry</div>
+            <div class="cap-desc">Data flows once, automatically</div>
+          </div>
+          <div class="cap-card">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" style="margin: 0 auto 10px; display: block;">
+              <path d="M14 4V14L20 20" stroke="#00E85B" stroke-width="2" stroke-linecap="round" fill="none"/>
+              <circle cx="14" cy="14" r="10" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/>
+            </svg>
+            <div class="cap-name">Invoice Sync</div>
+            <div class="cap-desc">Automatic push of invoices &amp; credit notes</div>
+          </div>
+          <div class="cap-card">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" style="margin: 0 auto 10px; display: block;">
+              <rect x="4" y="4" width="20" height="20" rx="3" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/>
+              <path d="M10 14H18M14 10V18" stroke="#00E85B" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <div class="cap-name">Payment Tracking</div>
+            <div class="cap-desc">Real-time payment status across systems</div>
+          </div>
+          <div class="cap-card">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" style="margin: 0 auto 10px; display: block;">
+              <path d="M6 20L14 8L22 20" stroke="#00E85B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="rgba(0,232,91,0.1)"/>
+              <path d="M10 16H18" stroke="#00E85B" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <div class="cap-name">Multi-Entity</div>
+            <div class="cap-desc">Separate integrations per billing entity</div>
+          </div>
+          <div class="cap-card">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" style="margin: 0 auto 10px; display: block;">
+              <circle cx="14" cy="14" r="10" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/>
+              <path d="M10 14L13 17L18 11" stroke="#00E85B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div class="cap-name">Nominal Codes</div>
+            <div class="cap-desc">Map charge types for precise ledger posting</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: Integration Overview -->
+    <div class="slide" data-duration="8000">
+      <div class="slide-inner">
+        <div class="section-label reveal">Overview</div>
+        <div class="section-title reveal d1">The <span class="highlight">Integration Landscape</span></div>
+        <div class="reveal d2">
+          <table class="integration-table">
+            <thead>
+              <tr><th>System</th><th>Method</th><th>Deployment</th><th>Primary Use Case</th></tr>
+            </thead>
+            <tbody>
+              <tr><td style="font-weight:700;color:var(--white)">Xero</td><td><span class="method-badge api">API (OAuth2)</span></td><td>Cloud</td><td>Most popular UK integration</td></tr>
+              <tr><td style="font-weight:700;color:var(--white)">Sage 200 (API)</td><td><span class="method-badge api">API (Hyperext)</span></td><td>On-prem / Cloud</td><td>Enterprise UK customers</td></tr>
+              <tr><td style="font-weight:700;color:var(--white)">Sage 200 (CSV)</td><td><span class="method-badge csv">CSV Export</span></td><td>On-prem / Cloud</td><td>Alternative to API route</td></tr>
+              <tr><td style="font-weight:700;color:var(--white)">Sage 50</td><td><span class="method-badge csv">CSV Export</span></td><td>Desktop</td><td>SME UK customers</td></tr>
+              <tr><td style="font-weight:700;color:var(--white)">Exact Online</td><td><span class="method-badge api">API (OAuth2)</span></td><td>Cloud</td><td>UK + European operations</td></tr>
+              <tr><td style="font-weight:700;color:var(--white)">QuickBooks</td><td><span class="method-badge api">API</span></td><td>Cloud</td><td>UK SME market</td></tr>
+              <tr><td style="font-weight:700;color:var(--white)">Adfinity (Easi)</td><td><span class="method-badge api">API</span></td><td>Cloud</td><td>Automated accounting</td></tr>
+              <tr><td style="font-weight:700;color:var(--white)">Generic UBL/CSV</td><td><span class="method-badge file">File Export</span></td><td>Any</td><td>Fallback for other systems</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: Xero -->
+    <div class="slide" data-duration="7000">
+      <div class="slide-inner">
+        <div class="section-label reveal">Cloud Integration</div>
+        <div class="section-title reveal d1"><span class="highlight">Xero</span> &#8212; The UK Favourite</div>
+        <div class="body-text reveal d2">Cloud-first, real-time, and feature-rich. Xero is the <span class="highlight">default recommendation</span> for UK customers using cloud accounting. Connected via OAuth2 for secure, credential-free access.</div>
+        <div class="stats-row reveal d3">
+          <div class="stat-card">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="margin: 0 auto 12px; display: block;">
+              <path d="M16 4V16L22 22" stroke="#00E85B" stroke-width="2" stroke-linecap="round" fill="none"/>
+              <circle cx="16" cy="16" r="12" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/>
+            </svg>
+            <div class="big-number" style="font-size:48px;">Real-time</div>
+            <div class="big-label">Payment status sync</div>
+          </div>
+          <div class="stat-card">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="margin: 0 auto 12px; display: block;">
+              <rect x="4" y="8" width="24" height="16" rx="3" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/>
+              <path d="M4 14H28" stroke="#00E85B" stroke-width="2"/>
+              <path d="M10 20H16" stroke="#00E85B" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <div class="big-number" style="font-size:48px;">9</div>
+            <div class="big-label">Supported features</div>
+          </div>
+          <div class="stat-card">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="margin: 0 auto 12px; display: block;">
+              <path d="M16 4C9.4 4 4 9.4 4 16s5.4 12 12 12 12-5.4 12-12S22.6 4 16 4z" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/>
+              <path d="M12 16L15 19L20 13" stroke="#00E85B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div class="big-number" style="font-size:48px;">OAuth2</div>
+            <div class="big-label">Secure authentication</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 5: Xero Features -->
+    <div class="slide" data-duration="8000">
+      <div class="slide-inner">
+        <div class="section-label reveal">Xero Features</div>
+        <div class="section-title reveal d1">Everything <span class="highlight">Syncs Automatically</span></div>
+        <div class="network-grid reveal d2">
+          <div class="network-card">
+            <div class="network-name">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="display:inline-block;margin-right:8px;vertical-align:middle;">
+                <rect x="2" y="3" width="16" height="14" rx="2" stroke="#00E85B" stroke-width="1.5" fill="rgba(0,232,91,0.1)"/>
+                <path d="M2 7H18" stroke="#00E85B" stroke-width="1.5"/>
+              </svg>
+              Sales Invoice Export
+            </div>
+            <div class="network-detail">Finalised invoices pushed automatically into Xero</div>
+          </div>
+          <div class="network-card">
+            <div class="network-name">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="display:inline-block;margin-right:8px;vertical-align:middle;">
+                <path d="M4 10H16M16 10L12 6M16 10L12 14" stroke="#00E85B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Credit Note Sync
+            </div>
+            <div class="network-detail">Credit notes reflected in Xero automatically</div>
+          </div>
+          <div class="network-card">
+            <div class="network-name">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="display:inline-block;margin-right:8px;vertical-align:middle;">
+                <circle cx="10" cy="7" r="4" stroke="#00E85B" stroke-width="1.5" fill="rgba(0,232,91,0.1)"/>
+                <path d="M3 17C3 14.2 6.1 12 10 12C13.9 12 17 14.2 17 17" stroke="#00E85B" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+              Customer Sync
+            </div>
+            <div class="network-detail">Records matched via accounting codes</div>
+          </div>
+          <div class="network-card">
+            <div class="network-name">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="display:inline-block;margin-right:8px;vertical-align:middle;">
+                <rect x="3" y="3" width="14" height="14" rx="2" stroke="#00E85B" stroke-width="1.5" fill="rgba(0,232,91,0.1)"/>
+                <path d="M7 10L9 12L13 8" stroke="#00E85B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Payment Status
+            </div>
+            <div class="network-detail">Xero payments update Qargo in real time</div>
+          </div>
+          <div class="network-card">
+            <div class="network-name">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="display:inline-block;margin-right:8px;vertical-align:middle;">
+                <path d="M10 3V10L14 14" stroke="#00E85B" stroke-width="1.5" stroke-linecap="round"/>
+                <circle cx="10" cy="10" r="7" stroke="#00E85B" stroke-width="1.5" fill="rgba(0,232,91,0.1)"/>
+              </svg>
+              VAT Calculation
+            </div>
+            <div class="network-detail">On-total and per-charge-line methods supported</div>
+          </div>
+          <div class="network-card">
+            <div class="network-name">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="display:inline-block;margin-right:8px;vertical-align:middle;">
+                <rect x="2" y="5" width="7" height="10" rx="1" stroke="#00E85B" stroke-width="1.5" fill="rgba(0,232,91,0.1)"/>
+                <rect x="11" y="5" width="7" height="10" rx="1" stroke="#00E85B" stroke-width="1.5" fill="rgba(0,232,91,0.1)"/>
+              </svg>
+              Purchase Invoices
+            </div>
+            <div class="network-detail">Subcontractor invoices synced to Xero</div>
+          </div>
+        </div>
+        <div style="margin-top:24px;max-width:860px;margin-left:auto;margin-right:auto;background:rgba(0,232,91,0.06);border-left:3px solid var(--green);border-radius:0 10px 10px 0;padding:14px 22px;text-align:left;" class="reveal d3">
+          <span style="color:var(--green);font-weight:700;">Sales tip:</span>
+          <span style="color:var(--navy-10);font-size:15px;"> Emphasise real-time payment sync as the key differentiator. Finance teams see paid invoices without logging into Qargo.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 6: Sage 200 -->
+    <div class="slide" data-duration="7000">
+      <div class="slide-inner">
+        <div class="section-label reveal">Enterprise</div>
+        <div class="section-title reveal d1"><span class="highlight">Sage 200</span> &#8212; Two Routes In</div>
+        <div class="body-text reveal d2">The enterprise UK favourite comes with <span class="highlight">two integration paths</span>: a full API via Hyperext for maximum automation, or CSV export for cost-sensitive or restricted IT environments.</div>
+        <div class="compare-row reveal d3">
+          <div class="compare-card good">
+            <div class="compare-title" style="color:var(--green)">API (via Hyperext)</div>
+            <div class="compare-row-item"><span class="compare-label">Connection</span><span class="compare-value" style="color:var(--green)">Real-time API</span></div>
+            <div class="compare-row-item"><span class="compare-label">Customer creation</span><span class="compare-value" style="color:var(--green)">Automatic</span></div>
+            <div class="compare-row-item"><span class="compare-label">Cost centres</span><span class="compare-value" style="color:var(--green)">Full support</span></div>
+            <div class="compare-row-item"><span class="compare-label">Analytical accounting</span><span class="compare-value" style="color:var(--green)">Full support</span></div>
+            <div class="compare-row-item"><span class="compare-label">Setup cost</span><span class="compare-value" style="color:var(--amber)">&#163;750 + VAT</span></div>
+            <div class="compare-row-item"><span class="compare-label">Recurring cost</span><span class="compare-value" style="color:var(--amber)">10% of ACV</span></div>
+          </div>
+          <div class="compare-card" style="background:rgba(74,158,255,0.04);border:1px solid rgba(74,158,255,0.12);">
+            <div class="compare-title" style="color:var(--blue)">CSV Export</div>
+            <div class="compare-row-item"><span class="compare-label">Connection</span><span class="compare-value" style="color:var(--blue)">Manual file import</span></div>
+            <div class="compare-row-item"><span class="compare-label">Customer creation</span><span class="compare-value" style="color:var(--navy-10)">Manual matching</span></div>
+            <div class="compare-row-item"><span class="compare-label">Cost centres</span><span class="compare-value" style="color:var(--blue)">Supported</span></div>
+            <div class="compare-row-item"><span class="compare-label">Analytical accounting</span><span class="compare-value" style="color:var(--blue)">Supported</span></div>
+            <div class="compare-row-item"><span class="compare-label">Setup cost</span><span class="compare-value" style="color:var(--navy-10)">&#163;1,600 (2 days)</span></div>
+            <div class="compare-row-item"><span class="compare-label">Recurring cost</span><span class="compare-value" style="color:var(--green)">None</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 7: Sage 50 -->
+    <div class="slide" data-duration="6000">
+      <div class="slide-inner">
+        <div class="section-label reveal">SME Desktop</div>
+        <div class="section-title reveal d1"><span class="highlight">Sage 50</span> &#8212; Simple &amp; Effective</div>
+        <div class="body-text reveal d2">The most widely used desktop accounting package among UK small businesses. A <span class="highlight">CSV file export</span> keeps things low-friction for operators who value simplicity.</div>
+        <div class="steps-grid reveal d3">
+          <div class="step-card">
+            <div class="step-num">1</div>
+            <div class="step-label">Configure</div>
+            <div class="step-desc">Map nominal codes in half a day</div>
+          </div>
+          <div class="step-card">
+            <div class="step-num">2</div>
+            <div class="step-label">Export</div>
+            <div class="step-desc">Qargo generates Sage 50 CSV</div>
+          </div>
+          <div class="step-card">
+            <div class="step-num">3</div>
+            <div class="step-label">Import</div>
+            <div class="step-desc">Finance team imports on schedule</div>
+          </div>
+          <div class="step-card">
+            <div class="step-num">4</div>
+            <div class="step-label">Reconcile</div>
+            <div class="step-desc">No more manual re-keying</div>
+          </div>
+        </div>
+        <div class="callout-green reveal d4" style="max-width:720px;margin-left:auto;margin-right:auto;">
+          <span style="color:var(--green);font-weight:700;">Supports:</span> Invoice export, credit notes, nominal code mapping, cost centres, and analytical accounting dimensions.
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 8: Exact Online -->
+    <div class="slide" data-duration="7000">
+      <div class="slide-inner">
+        <div class="section-label reveal">Cross-Border</div>
+        <div class="section-title reveal d1"><span class="highlight">Exact Online</span> &#8212; Think European</div>
+        <div class="body-text reveal d2">Cloud-based with native <span class="highlight">multi-country support</span>. Perfect for UK logistics companies with European operations spanning multiple jurisdictions from a single Qargo instance.</div>
+        <div class="cap-grid reveal d3" style="grid-template-columns: repeat(4, 1fr);">
+          <div class="cap-card">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" style="margin:0 auto 10px;display:block;">
+              <circle cx="14" cy="14" r="10" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/>
+              <path d="M8 14H20M14 8V20" stroke="#00E85B" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            <div class="cap-name">UK</div>
+            <div class="cap-desc">Full environment support</div>
+          </div>
+          <div class="cap-card">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" style="margin:0 auto 10px;display:block;">
+              <circle cx="14" cy="14" r="10" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/>
+              <path d="M8 14H20M14 8V20" stroke="#00E85B" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            <div class="cap-name">Netherlands</div>
+            <div class="cap-desc">Native NL support</div>
+          </div>
+          <div class="cap-card">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" style="margin:0 auto 10px;display:block;">
+              <circle cx="14" cy="14" r="10" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/>
+              <path d="M8 14H20M14 8V20" stroke="#00E85B" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            <div class="cap-name">Belgium</div>
+            <div class="cap-desc">Native BE support</div>
+          </div>
+          <div class="cap-card">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" style="margin:0 auto 10px;display:block;">
+              <circle cx="14" cy="14" r="10" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/>
+              <path d="M8 14H20M14 8V20" stroke="#00E85B" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            <div class="cap-name">DE &amp; FR</div>
+            <div class="cap-desc">Germany &amp; France</div>
+          </div>
+        </div>
+        <div class="network-grid reveal d4" style="grid-template-columns: repeat(3, 1fr); margin-top: 20px;">
+          <div class="network-card">
+            <div class="network-name">Invoice &amp; Credit Note Sync</div>
+            <div class="network-detail">Automatic synchronisation across entities</div>
+          </div>
+          <div class="network-card">
+            <div class="network-name">Customer Auto-Generation</div>
+            <div class="network-detail">Create records automatically in Exact</div>
+          </div>
+          <div class="network-card">
+            <div class="network-name">Analytical Accounting</div>
+            <div class="network-detail">Enhanced Q1 2026 with full support</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 9: QuickBooks -->
+    <div class="slide" data-duration="6000">
+      <div class="slide-inner">
+        <div class="section-label reveal">UK SME Cloud</div>
+        <div class="section-title reveal d1"><span class="highlight">QuickBooks</span> &#8212; Cloud-to-Cloud</div>
+        <div class="body-text reveal d2">A solid option for UK SME customers who want <span class="highlight">cloud-to-cloud</span> integration. Covers the core invoicing workflow that most smaller logistics operators need.</div>
+        <div class="two-col reveal d3">
+          <div class="col-card" style="text-align:center;">
+            <svg width="64" height="64" viewBox="0 0 64 64" fill="none" style="margin:0 auto 16px;display:block;">
+              <rect x="8" y="12" width="48" height="40" rx="6" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/>
+              <path d="M20 30H44M20 38H36" stroke="#00E85B" stroke-width="2" stroke-linecap="round"/>
+              <path d="M24 22L28 26L32 20" stroke="#00E85B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <h3 style="color:var(--white);font-size:22px;font-weight:700;margin-bottom:12px;">
+              <span class="highlight">Core</span> Features
+            </h3>
+            <p style="color:var(--dark-grey);font-size:15px;line-height:1.6;">
+              Invoice synchronisation, credit note support, customer matching, and <span class="highlight">nominal code mapping</span> via API connection.
+            </p>
+          </div>
+          <div class="col-card" style="text-align:center;">
+            <svg width="64" height="64" viewBox="0 0 64 64" fill="none" style="margin:0 auto 16px;display:block;">
+              <circle cx="32" cy="32" r="20" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/>
+              <path d="M24 32L30 38L40 26" stroke="#00E85B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <h3 style="color:var(--white);font-size:22px;font-weight:700;margin-bottom:12px;">
+              <span class="highlight">Sales</span> Guidance
+            </h3>
+            <p style="color:var(--dark-grey);font-size:15px;line-height:1.6;">
+              If a prospect compares Xero vs QuickBooks, <span class="highlight">recommend Xero</span> for the richer feature set, but reassure them QuickBooks is fully supported.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 10: Adfinity -->
+    <div class="slide" data-duration="6000">
+      <div class="slide-inner">
+        <div class="section-label reveal">Easi Ecosystem</div>
+        <div class="section-title reveal d1"><span class="highlight">Adfinity</span> &#8212; Loop Closed</div>
+        <div class="body-text reveal d2">Comprehensive business management by Easi. The recently added <span class="highlight">payment status sync</span> (February 2026) closes the loop between invoicing and cash collection &#8212; zero manual intervention.</div>
+        <div class="route-line reveal d3">
+          <div class="route-stop">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" style="margin:0 auto 8px;display:block;">
+              <rect x="4" y="6" width="20" height="16" rx="3" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/>
+              <path d="M4 12H24" stroke="#00E85B" stroke-width="2"/>
+            </svg>
+            <div class="stop-name">Invoice Created</div>
+            <div class="stop-detail">In Qargo</div>
+          </div>
+          <div class="route-connector"></div>
+          <div class="route-stop">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" style="margin:0 auto 8px;display:block;">
+              <path d="M6 14H22M14 6V22" stroke="#00E85B" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <div class="stop-name">Auto-Pushed</div>
+            <div class="stop-detail">To Adfinity</div>
+          </div>
+          <div class="route-connector"></div>
+          <div class="route-stop">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" style="margin:0 auto 8px;display:block;">
+              <circle cx="14" cy="14" r="10" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/>
+              <path d="M10 14H18" stroke="#00E85B" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <div class="stop-name">Customer Synced</div>
+            <div class="stop-detail">Records matched</div>
+          </div>
+          <div class="route-connector"></div>
+          <div class="route-stop">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" style="margin:0 auto 8px;display:block;">
+              <rect x="6" y="6" width="16" height="16" rx="3" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/>
+              <path d="M10 14L13 17L18 11" stroke="#00E85B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div class="stop-name">Payment Confirmed</div>
+            <div class="stop-detail">Status syncs back</div>
+          </div>
+          <div class="route-connector"></div>
+          <div class="route-stop">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" style="margin:0 auto 8px;display:block;">
+              <circle cx="14" cy="14" r="10" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/>
+              <path d="M10 14L13 17L18 11" stroke="#00E85B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div class="stop-name">Qargo Updated</div>
+            <div class="stop-detail">Fully automated</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 11: Additional Integrations -->
+    <div class="slide" data-duration="8000">
+      <div class="slide-inner">
+        <div class="section-label reveal">The Wider Ecosystem</div>
+        <div class="section-title reveal d1"><span class="highlight">11+</span> Systems Covered</div>
+        <div class="body-text reveal d2">Beyond the core UK integrations, Qargo connects to a range of additional accounting and ERP systems. And if all else fails &#8212; there is always <span class="highlight">Generic UBL/CSV</span>.</div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:24px;" class="reveal d3">
+          <div class="cap-card">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" style="margin:0 auto 10px;display:block;">
+              <rect x="4" y="4" width="20" height="20" rx="4" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/>
+              <path d="M10 14H18M14 10V18" stroke="#00E85B" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <div class="cap-name">NetSuite</div>
+            <div class="cap-desc">Enterprise ERP via API</div>
+          </div>
+          <div class="cap-card">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" style="margin:0 auto 10px;display:block;">
+              <rect x="4" y="4" width="20" height="20" rx="4" stroke="rgba(255,255,255,0.4)" stroke-width="2" fill="rgba(255,255,255,0.02)"/>
+              <path d="M10 14H18" stroke="rgba(255,255,255,0.4)" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <div class="cap-name">Adsolut</div>
+            <div class="cap-desc">~1.5 days setup</div>
+          </div>
+          <div class="cap-card">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" style="margin:0 auto 10px;display:block;">
+              <rect x="4" y="4" width="20" height="20" rx="4" stroke="rgba(255,255,255,0.4)" stroke-width="2" fill="rgba(255,255,255,0.02)"/>
+              <path d="M10 14H18" stroke="rgba(255,255,255,0.4)" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <div class="cap-name">AFAS</div>
+            <div class="cap-desc">File-based, NL/BE focus</div>
+          </div>
+          <div class="cap-card">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" style="margin:0 auto 10px;display:block;">
+              <rect x="4" y="4" width="20" height="20" rx="4" stroke="rgba(255,255,255,0.4)" stroke-width="2" fill="rgba(255,255,255,0.02)"/>
+              <path d="M10 14H18" stroke="rgba(255,255,255,0.4)" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <div class="cap-name">King4</div>
+            <div class="cap-desc">Accounting integration</div>
+          </div>
+          <div class="cap-card">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" style="margin:0 auto 10px;display:block;">
+              <rect x="4" y="4" width="20" height="20" rx="4" stroke="rgba(255,255,255,0.4)" stroke-width="2" fill="rgba(255,255,255,0.02)"/>
+              <path d="M10 14H18" stroke="rgba(255,255,255,0.4)" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <div class="cap-name">Multivers</div>
+            <div class="cap-desc">Platform integration</div>
+          </div>
+          <div class="cap-card">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" style="margin:0 auto 10px;display:block;">
+              <rect x="4" y="4" width="20" height="20" rx="4" stroke="rgba(255,255,255,0.4)" stroke-width="2" fill="rgba(255,255,255,0.02)"/>
+              <path d="M10 14H18" stroke="rgba(255,255,255,0.4)" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <div class="cap-name">Exchequer</div>
+            <div class="cap-desc">Accounting software</div>
+          </div>
+          <div class="cap-card">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" style="margin:0 auto 10px;display:block;">
+              <rect x="4" y="4" width="20" height="20" rx="4" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/>
+              <path d="M10 14H18M14 10V18" stroke="#00E85B" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <div class="cap-name">Odoo</div>
+            <div class="cap-desc">ERP/accounting modules</div>
+          </div>
+          <div class="cap-card">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" style="margin:0 auto 10px;display:block;">
+              <rect x="4" y="4" width="20" height="20" rx="4" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/>
+              <path d="M10 10L18 18M18 10L10 18" stroke="#00E85B" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <div class="cap-name">Generic UBL/CSV</div>
+            <div class="cap-desc">Universal fallback</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 12: Technical Capabilities -->
+    <div class="slide" data-duration="9000">
+      <div class="slide-inner">
+        <div class="section-label reveal">Quick Reference</div>
+        <div class="section-title reveal d1">Cross-Integration <span class="highlight">Capabilities</span></div>
+        <div class="reveal d2">
+          <table class="integration-table" style="font-size:13px;">
+            <thead>
+              <tr><th>Feature</th><th>Availability</th></tr>
+            </thead>
+            <tbody>
+              <tr><td style="font-weight:600;color:var(--white)">Invoice Export (Sales)</td><td><span style="color:var(--green);font-weight:600;">All integrations</span></td></tr>
+              <tr><td style="font-weight:600;color:var(--white)">Invoice Export (Purchase)</td><td>Xero, Sage 200, Exact Online</td></tr>
+              <tr><td style="font-weight:600;color:var(--white)">Credit Note Sync</td><td><span style="color:var(--green);font-weight:600;">All integrations</span></td></tr>
+              <tr><td style="font-weight:600;color:var(--white)">Customer/Supplier Sync</td><td>Automatic on API; manual on CSV</td></tr>
+              <tr><td style="font-weight:600;color:var(--white)">Payment Status Tracking</td><td>Xero, Adfinity (bidirectional)</td></tr>
+              <tr><td style="font-weight:600;color:var(--white)">Analytical Accounting</td><td>Sage 200, Exact Online, Sage 50</td></tr>
+              <tr><td style="font-weight:600;color:var(--white)">Cost Centre Allocation</td><td>Sage 200, Exact Online, Sage 50</td></tr>
+              <tr><td style="font-weight:600;color:var(--white)">Multi-Entity Billing</td><td>Xero, Sage 200, Exact Online, Sage 50</td></tr>
+              <tr><td style="font-weight:600;color:var(--white)">OAuth2 Authentication</td><td>Xero, Exact Online</td></tr>
+              <tr><td style="font-weight:600;color:var(--white)">Tax/VAT Configuration</td><td><span style="color:var(--green);font-weight:600;">All systems</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 13: Setup & Security -->
+    <div class="slide" data-duration="7000">
+      <div class="slide-inner">
+        <div class="section-label reveal">Onboarding</div>
+        <div class="section-title reveal d1">Setup Is <span class="highlight">Measured in Hours</span></div>
+        <div class="stats-row reveal d2">
+          <div class="stat-card">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="margin: 0 auto 12px; display: block;">
+              <path d="M16 6V16L22 22" stroke="#00E85B" stroke-width="2" stroke-linecap="round" fill="none"/>
+              <circle cx="16" cy="16" r="12" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/>
+            </svg>
+            <div class="big-number" style="font-size:56px;">0.5&#8211;1</div>
+            <div class="big-label">Days for standard setup</div>
+          </div>
+          <div class="stat-card">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="margin: 0 auto 12px; display: block;">
+              <rect x="4" y="4" width="24" height="24" rx="4" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/>
+              <path d="M12 16L15 19L20 13" stroke="#00E85B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div class="big-number" style="font-size:56px;">2&#8211;4</div>
+            <div class="big-label">Days for complex deployments</div>
+          </div>
+          <div class="stat-card">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="margin: 0 auto 12px; display: block;">
+              <path d="M16 4L28 10V22L16 28L4 22V10L16 4Z" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/>
+              <path d="M12 16L15 19L20 13" stroke="#00E85B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div class="big-number" style="font-size:56px;">OAuth2</div>
+            <div class="big-label">No credentials stored</div>
+          </div>
+        </div>
+        <div class="callout-green reveal d3" style="max-width:720px;margin-left:auto;margin-right:auto;">
+          <span style="color:var(--green);font-weight:700;">Security:</span> Cloud integrations use OAuth2 &#8212; Qargo never stores customer accounting credentials. Customers can revoke access any time from their accounting platform.
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 14: Summary -->
+    <div class="slide" data-duration="6000">
+      <div class="slide-inner">
+        <div class="section-label reveal">Key Takeaways</div>
+        <div class="section-title reveal d1">Finance Integrations <span class="accent">Sell Qargo</span></div>
+        <div class="body-text reveal d2" style="margin-bottom: 28px;">Every UK prospect has an accounting system. Qargo connects to it. That is a conversation closer.</div>
+        <div class="glossary-grid reveal d3">
+          <div class="glossary-item">
+            <div class="glossary-term">Cloud favourite? Xero</div>
+            <div class="glossary-def">Default recommendation. Real-time sync, OAuth2, richest feature set.</div>
+          </div>
+          <div class="glossary-item">
+            <div class="glossary-term">Enterprise? Sage 200</div>
+            <div class="glossary-def">API or CSV route. Cost centres, analytical accounting, multi-entity.</div>
+          </div>
+          <div class="glossary-item">
+            <div class="glossary-term">SME desktop? Sage 50</div>
+            <div class="glossary-def">CSV export. Half-day setup. No re-keying invoices.</div>
+          </div>
+          <div class="glossary-item">
+            <div class="glossary-term">Cross-border? Exact Online</div>
+            <div class="glossary-def">Multi-country environments. UK, NL, BE, DE, FR from one instance.</div>
+          </div>
+          <div class="glossary-item">
+            <div class="glossary-term">SME cloud? QuickBooks</div>
+            <div class="glossary-def">Solid core invoicing. Recommend Xero if they are choosing.</div>
+          </div>
+          <div class="glossary-item">
+            <div class="glossary-term">Easi ecosystem? Adfinity</div>
+            <div class="glossary-def">Payment status sync closes the loop. Feb 2026 release.</div>
+          </div>
+        </div>
+        <div class="reveal d4" style="margin-top: 32px;">
+          <span class="qargo-badge">Qargo Academy</span>
+        </div>
+      </div>
+    </div>
+
   </div>
 
-  <div class="slide" data-duration="6000">
-    <h2>Strong Customer Authentication (SCA)</h2>
-    <p>Required under PSD2 for electronic payments and sensitive account access:</p>
-    <ul>
-      <li><span class="highlight">Two-Factor Authentication</span> - SMS, App, Card, Biometric</li>
-      <li><span class="highlight">Exemptions</span> - Low value payments, recurring transactions (regulated)</li>
-      <li><span class="highlight">Implementation Deadline</span> - 31 December 2020 (extended for certain scenarios)</li>
-      <li><span class="highlight">Risk-Based Approaches</span> - Reduced friction for low-risk transactions</li>
-    </ul>
+  <div id="controls">
+    <button id="prev-btn" title="Previous">&#9664;</button>
+    <button id="play-btn" title="Play/Pause">&#9654;</button>
+    <button id="next-btn" title="Next">&#9654;</button>
+    <div id="slide-counter">1 / 14</div>
   </div>
 
-  <div class="slide" data-duration="7000">
-    <h2>Financial Data Integration Best Practices</h2>
-    <ul>
-      <li><span class="highlight">API-First Architecture</span> - Use secure, standardized APIs (OAuth 2.0)</li>
-      <li><span class="highlight">Encryption</span> - TLS 1.2+ for transit, AES-256 for storage</li>
-      <li><span class="highlight">Access Controls</span> - Role-based, least privilege principles</li>
-      <li><span class="highlight">Audit Logging</span> - Complete record of all data access</li>
-      <li><span class="highlight">Regular Testing</span> - Penetration testing and security audits</li>
-    </ul>
-  </div>
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    const progressBar = document.getElementById('progress-bar');
+    const counter = document.getElementById('slide-counter');
+    const playBtn = document.getElementById('play-btn');
+    let current = 0;
+    let playing = false;
+    let timer = null;
 
-  <div class="slide" data-duration="6000">
-    <h2>Compliance Monitoring & Reporting</h2>
-    <p>Continuous oversight requirements:</p>
-    <ul>
-      <li><span class="highlight">Transaction Monitoring</span> - AML/CFT compliance</li>
-      <li><span class="highlight">Regulatory Reporting</span> - EMIR, REMIT, TRACE equivalents</li>
-      <li><span class="highlight">Incident Reporting</span> - Security breaches within 72 hours to ICO</li>
-      <li><span class="highlight">Regular Audits</span> - Internal and external assessments</li>
-    </ul>
-  </div>
+    function showSlide(index) {
+      slides.forEach(s => s.classList.remove('active'));
+      slides[index].classList.add('active');
+      progressBar.style.width = ((index + 1) / slides.length * 100) + '%';
+      counter.textContent = (index + 1) + ' / ' + slides.length;
+      current = index;
+    }
 
-  <div class="slide" data-duration="5000">
-    <h1 style="color: #00d4ff;">Key Takeaways</h1>
-    <ul>
-      <li>UK regulation prioritizes consumer protection and market stability</li>
-      <li>PSD2 and Open Banking drive innovation in financial services</li>
-      <li>GDPR compliance is non-negotiable for data handling</li>
-      <li>Strong authentication and encryption are fundamental</li>
-      <li>Continuous monitoring and reporting demonstrate compliance</li>
-    </ul>
-  </div>
+    function goNext() {
+      if (current < slides.length - 1) showSlide(current + 1);
+    }
 
-  <div class="slide" data-duration="0">
-    <h1>Questions & Discussion</h1>
-    <p class="subtitle">For more information, visit the FCA and PRA websites</p>
-    <p style="margin-top: 50px; color: #888;">Slide presentation created for financial integration training</p>
-  </div>
-</div>
+    function goPrev() {
+      if (current > 0) showSlide(current - 1);
+    }
 
-<div class="slide-counter"><span id="current">1</span> / <span id="total">11</span></div>
+    function autoNext() {
+      if (current < slides.length - 1) { showSlide(current + 1); scheduleNext(); }
+      else stopPlay();
+    }
 
-<div class="controls">
-  <button id="prev-btn">← Previous</button>
-  <button id="play-btn">▶</button>
-  <button id="next-btn">Next →</button>
-</div>
+    function scheduleNext() {
+      clearTimeout(timer);
+      if (!playing) return;
+      var d = parseInt(slides[current].dataset.duration) || 5000;
+      timer = setTimeout(autoNext, d);
+    }
 
-<script>
-  const slides = document.querySelectorAll('.slide');
-  let current = 0;
-  let playing = false;
-  let timer;
-  const playBtn = document.getElementById('play-btn');
-  document.getElementById('total').textContent = slides.length;
+    function stopPlay() {
+      playing = false; clearTimeout(timer);
+      playBtn.textContent = '\u25B6'; playBtn.classList.remove('active');
+    }
 
-  function updateCounter() { document.getElementById('current').textContent = current + 1; }
+    function startPlay() {
+      playing = true;
+      playBtn.textContent = '\u23F8'; playBtn.classList.add('active');
+      scheduleNext();
+    }
 
-  function goNext() { if (current < slides.length - 1) { showSlide(current + 1); } }
-  function goPrev() { if (current > 0) { showSlide(current - 1); } }
+    function togglePlay() { playing ? stopPlay() : startPlay(); }
 
-  function showSlide(n) {
-    slides.forEach(s => s.classList.remove('active'));
-    current = n;
-    slides[current].classList.add('active');
-    updateCounter();
-    if (playing) scheduleNext();
-  }
+    document.getElementById('next-btn').addEventListener('click', function() { stopPlay(); goNext(); });
+    document.getElementById('prev-btn').addEventListener('click', function() { stopPlay(); goPrev(); });
+    playBtn.addEventListener('click', togglePlay);
 
-  function scheduleNext() {
-    clearTimeout(timer);
-    if (!playing) return;
-    var d = parseInt(slides[current].dataset.duration) || 5000;
-    timer = setTimeout(autoNext, d);
-  }
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); stopPlay(); goNext(); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); stopPlay(); goPrev(); }
+      if (e.key === 'p') togglePlay();
+    });
 
-  function stopPlay() {
-    playing = false; clearTimeout(timer);
-    playBtn.textContent = '▶'; playBtn.classList.remove('active');
-  }
-
-  function startPlay() {
-    playing = true;
-    playBtn.textContent = '⏸'; playBtn.classList.add('active');
-    scheduleNext();
-  }
-
-  function togglePlay() { playing ? stopPlay() : startPlay(); }
-
-  document.getElementById('next-btn').addEventListener('click', function() { stopPlay(); goNext(); });
-  document.getElementById('prev-btn').addEventListener('click', function() { stopPlay(); goPrev(); });
-  playBtn.addEventListener('click', togglePlay);
-
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); stopPlay(); goNext(); }
-    if (e.key === 'ArrowLeft') { e.preventDefault(); stopPlay(); goPrev(); }
-    if (e.key === 'p') togglePlay();
-  });
-
-  showSlide(0);
+    showSlide(0);
   </script>
 </body>
 </html>
