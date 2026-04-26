@@ -111,7 +111,7 @@
   .section-subtitle { font-size: 22px; font-weight: 400; color: var(--dark-grey); max-width: 700px; margin: 0 auto; line-height: 1.6; }
   .body-text { font-size: 20px; color: var(--dark-grey); max-width: 720px; margin: 0 auto; line-height: 1.7; }
   .big-number { font-size: 80px; font-weight: 800; color: var(--green); line-height: 1; }
-  .big-label { font-size: 18px; color: var(--navy-70); margin-top: 8px; font-weight: 500; }
+  .big-label { font-size: 16px; color: var(--navy-70); margin-top: 10px; font-weight: 500; }
 
   .highlight, .highlight-green { color: var(--green); font-weight: 600; }
   .highlight-amber { color: var(--amber); font-weight: 600; }
@@ -122,6 +122,7 @@
   .stat-card {
     background: rgba(0,232,91,0.04); border: 1px solid rgba(0,232,91,0.12);
     border-radius: 16px; padding: 32px 28px; min-width: 180px; flex: 1; max-width: 280px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 200px;
   }
 
   .steps-grid { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 28px; }
@@ -356,24 +357,24 @@
         <div class="body-text reveal d2">Cloud-first, real-time, and feature-rich. Xero is a <span class="highlight">leading cloud accounting platform</span> popular with UK SMEs and mid-market companies. Connected via OAuth2 for secure, credential-free access.</div>
         <div class="stats-row reveal d3">
           <div class="stat-card">
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="margin: 0 auto 12px; display: block;">
+            <svg width="36" height="36" viewBox="0 0 32 32" fill="none" style="margin: 0 auto 14px; display: block;">
               <circle cx="16" cy="16" r="12" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/><path d="M10 12C10 9 13 7 16 7C19 7 21 9 22 11M22 20C22 23 19 25 16 25C13 25 11 23 10 21" stroke="#00E85B" stroke-width="2" stroke-linecap="round"/><path d="M22 7V11H18M10 25V21H14" stroke="#00E85B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            <div class="big-number" style="font-size:48px;">Real-time</div>
+            <div class="big-number" style="font-size:40px;white-space:nowrap;">Real-time</div>
             <div class="big-label">Payment status sync</div>
           </div>
           <div class="stat-card">
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="margin: 0 auto 12px; display: block;">
+            <svg width="36" height="36" viewBox="0 0 32 32" fill="none" style="margin: 0 auto 14px; display: block;">
               <rect x="6" y="4" width="20" height="24" rx="3" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/><path d="M11 10H21M11 15H21M11 20H17" stroke="#00E85B" stroke-width="1.5" stroke-linecap="round"/><circle cx="11" cy="10" r="1" fill="#00E85B"/><circle cx="11" cy="15" r="1" fill="#00E85B"/><circle cx="11" cy="20" r="1" fill="#00E85B"/>
             </svg>
-            <div class="big-number" style="font-size:48px;">9</div>
+            <div class="big-number" style="font-size:40px;">9</div>
             <div class="big-label">Supported features</div>
           </div>
           <div class="stat-card">
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="margin: 0 auto 12px; display: block;">
+            <svg width="36" height="36" viewBox="0 0 32 32" fill="none" style="margin: 0 auto 14px; display: block;">
               <path d="M16 4L6 8V16C6 22 10 26 16 28C22 26 26 22 26 16V8L16 4Z" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/><path d="M12 16L15 19L20 13" stroke="#00E85B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            <div class="big-number" style="font-size:48px;">OAuth2</div>
+            <div class="big-number" style="font-size:40px;">OAuth2</div>
             <div class="big-label">Secure authentication</div>
           </div>
         </div>
