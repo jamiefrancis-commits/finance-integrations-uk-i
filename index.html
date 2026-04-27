@@ -73,9 +73,9 @@
     display: flex; align-items: center; justify-content: center;
     opacity: 0; transform: scale(0.97);
     transition: opacity 0.8s ease, transform 0.8s ease;
-    pointer-events: none; padding: 60px;
+    pointer-events: none; padding: 60px; visibility: hidden;
   }
-  .slide.active { opacity: 1; transform: scale(1); pointer-events: auto; }
+  .slide.active { opacity: 1; transform: scale(1); pointer-events: auto; visibility: visible; }
   .slide-inner { max-width: 960px; width: 100%; text-align: center; }
 
   .reveal {
